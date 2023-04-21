@@ -91,8 +91,61 @@ console.log(obj);
 let obj2 = {};
 console.log(obj2);
 
+let fruit = "apple";
 let User = {
     name: "John",
-    age: 30
+    age: 30,
+    [fruit]: 5,
 };
 console.log(user);
+// Access with User.name, User.age, User["name"]. Delete with "delete User.name"
+let name = "John", age = 30;
+let us = {
+    name,
+    age,
+    sayHi() {
+        console.log("Hi " + this.name);
+    }, // Attention, this is not strictly related to "object". It can appear in solo.
+    toString() {
+        return `{name: "${this.name}"`;
+    },
+    valueOf() {
+        return this.age;
+    },
+}; // us.name = name, us.age = age.
+
+console.log("name" in us); // Attribute exists test.
+
+for (let key in us) {
+    console.log(key, us[key]);
+}
+
+
+// Assign object.
+let permissions1 = { canView: true };
+let us2 = {};
+Object.assign(us2, us, permissions1);
+
+// Constructor
+function UserClass(name) {
+    this.name = name;
+    this.isAdmin = false;
+    if (new.target) { // If called with "new" operator.
+        this.isAdmin = true;
+    }
+
+}
+new UserClass("Ann");
+
+// Return undefined if parent was not defined:
+// user?.address?.street;
+// obj?.[prop];
+// obj.method?.();
+
+// Symbol
+let id = Symbol();
+
+let id2 = Symbol.for("id");
+let idAgain = Symbol.for("id");
+// id === idAgain here.
+// keyFor to look back from var to key.
